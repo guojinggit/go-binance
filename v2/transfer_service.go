@@ -51,14 +51,15 @@ func (s *TransferService) Do(ctx context.Context) (tranId string , err error) {
 		endpoint: "/sapi/v1/sub-account/universalTransfer",
 		secType:  secTypeSigned,
 	}
-	r.setFormParams(params{
-		"fromEmail":     	s.fromEmail,
-		"toEmail": 		 	s.toEmail,
-		"fromAccountType": 	s.fromAccountType,
-		"toAccountType": 	s.toAccountType,
-		"asset":			s.asset,
-		"amount":			s.amount,
-	})
+
+	r.setParam("fromEmail", s.fromEmail)
+	r.setParam("toEmail", s.toEmail)
+	r.setParam("fromAccountType", s.fromAccountType)
+	r.setParam("toAccountType", s.toAccountType)
+	r.setParam("asset", s.asset)
+	r.setParam("amount", s.amount)
+
+
 	data, err := s.c.callAPI(ctx, r)
 	tranId = ""
 	if err != nil {
