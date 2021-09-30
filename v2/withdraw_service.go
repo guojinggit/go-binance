@@ -116,18 +116,24 @@ type CreateWithdrawResponse struct {
 //
 // See https://binance-docs.github.io/apidocs/spot/en/#withdraw-history-supporting-network-user_data
 type ListWithdrawsService struct {
-	c         *Client
-	coin      *string
-	status    *int
-	startTime *int64
-	endTime   *int64
-	offset    *int
-	limit     *int
+	c        	*Client
+	coin      	*string
+	orderId 	*string
+	status    	*int
+	startTime 	*int64
+	endTime   	*int64
+	offset    	*int
+	limit     	*int
 }
 
 // Coin sets the coin parameter.
 func (s *ListWithdrawsService) Coin(coin string) *ListWithdrawsService {
 	s.coin = &coin
+	return s
+}
+
+func(s *ListWithdrawsService) WithdrawOrderId(orderId string) *ListWithdrawsService {
+	s.orderId = &orderId
 	return s
 }
 
@@ -172,6 +178,10 @@ func (s *ListWithdrawsService) Do(ctx context.Context) (res []*Withdraw, err err
 	}
 	if s.coin != nil {
 		r.setParam("coin", *s.coin)
+	}
+
+	if s.orderId != nil {
+		r.setParam("withdrawOrderId", *s.orderId)
 	}
 	if s.status != nil {
 		r.setParam("status", *s.status)
