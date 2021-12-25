@@ -748,8 +748,13 @@ type CreateBatchOrdersService struct {
 	orders []*CreateOrderService
 }
 
+type CreateBatchOrderResponse struct {
+	*Order
+	Code    int64  `json:"code"`
+	Message string `json:"msg"`
+}
 type CreateBatchOrdersResponse struct {
-	Orders []*Order
+	Responses []*CreateBatchOrderResponse
 }
 
 func (s *CreateBatchOrdersService) OrderList(orders []*CreateOrderService) *CreateBatchOrdersService {
@@ -836,16 +841,11 @@ func (s *CreateBatchOrdersService) Do(ctx context.Context, opts ...RequestOption
 	batchCreateOrdersResponse := new(CreateBatchOrdersResponse)
 
 	for _, j := range rawMessages {
-		o := new(Order)
+		o := new(CreateBatchOrderResponse)
 		if err := json.Unmarshal(*j, o); err != nil {
 			return &CreateBatchOrdersResponse{}, err
 		}
-
-		if o.ClientOrderID != "" {
-			batchCreateOrdersResponse.Orders = append(batchCreateOrdersResponse.Orders, o)
-			continue
-		}
-
+		batchCreateOrdersResponse.Responses = append(batchCreateOrdersResponse.Responses, o)
 	}
 
 	return batchCreateOrdersResponse, nil
