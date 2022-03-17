@@ -16,6 +16,7 @@ const (
 	baseCombinedTestnetURL = "wss://stream.binancefuture.com/stream?streams="
 )
 
+var CustomWsHost string
 var (
 	// WebsocketTimeout is an interval for sending ping/pong messages if WebsocketKeepalive is enabled
 	WebsocketTimeout = time.Second * 60
@@ -30,6 +31,9 @@ func getWsEndpoint() string {
 	if UseTestnet {
 		return baseWsTestnetUrl
 	}
+	if CustomWsHost != "" {
+		return fmt.Sprintf("wss://%s/ws", CustomWsHost)
+	}
 	return baseWsMainUrl
 }
 
@@ -37,6 +41,9 @@ func getWsEndpoint() string {
 func getCombinedEndpoint() string {
 	if UseTestnet {
 		return baseCombinedTestnetURL
+	}
+	if CustomWsHost != "" {
+		return fmt.Sprintf("wss://%s/stream?streams=", CustomWsHost)
 	}
 	return baseCombinedMainURL
 }

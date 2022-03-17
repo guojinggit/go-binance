@@ -75,6 +75,8 @@ const (
 	baseApiTestnetUrl = "https://testnet.binancefuture.com"
 )
 
+var CustomApiHost string
+
 // Global enums
 const (
 	SideTypeBuy  SideType = "BUY"
@@ -192,6 +194,9 @@ func newJSON(data []byte) (j *simplejson.Json, err error) {
 func getApiEndpoint() string {
 	if UseTestnet {
 		return baseApiTestnetUrl
+	}
+	if CustomApiHost != "" {
+		return fmt.Sprintf("https://%s", CustomApiHost)
 	}
 	return baseApiMainUrl
 }
