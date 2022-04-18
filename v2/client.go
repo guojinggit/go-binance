@@ -65,6 +65,12 @@ type SideEffectType string
 // FuturesTransferType define futures transfer type
 type FuturesTransferType int
 
+// TransactionType define transaction type
+type TransactionType string
+
+// LendingType define the type of lending (flexible saving, activity, ...)
+type LendingType string
+
 // Endpoints
 const (
 	baseAPIMainURL    = "https://api.binance.com"
@@ -147,6 +153,15 @@ const (
 	SideEffectTypeNoSideEffect SideEffectType = "NO_SIDE_EFFECT"
 	SideEffectTypeMarginBuy    SideEffectType = "MARGIN_BUY"
 	SideEffectTypeAutoRepay    SideEffectType = "AUTO_REPAY"
+
+	TransactionTypeDeposit  TransactionType = "0"
+	TransactionTypeWithdraw TransactionType = "1"
+	TransactionTypeBuy      TransactionType = "0"
+	TransactionTypeSell     TransactionType = "1"
+
+	LendingTypeFlexible LendingType = "DAILY"
+	LendingTypeFixed    LendingType = "CUSTOMIZED_FIXED"
+	LendingTypeActivity LendingType = "ACTIVITY"
 
 	timestampKey  = "timestamp"
 	signatureKey  = "signature"
@@ -413,6 +428,11 @@ func (c *Client) NewListOpenOrdersService() *ListOpenOrdersService {
 	return &ListOpenOrdersService{c: c}
 }
 
+// NewListOpenOcoService init list open oco service
+func (c *Client) NewListOpenOcoService() *ListOpenOcoService {
+	return &ListOpenOcoService{c: c}
+}
+
 // NewListOrdersService init listing orders service
 func (c *Client) NewListOrdersService() *ListOrdersService {
 	return &ListOrdersService{c: c}
@@ -421,6 +441,11 @@ func (c *Client) NewListOrdersService() *ListOrdersService {
 // NewGetAccountService init getting account service
 func (c *Client) NewGetAccountService() *GetAccountService {
 	return &GetAccountService{c: c}
+}
+
+// NewGetAPIKeyPermission init getting API key permission
+func (c *Client) NewGetAPIKeyPermission() *GetAPIKeyPermission {
+	return &GetAPIKeyPermission{c: c}
 }
 
 // NewListSavingsFlexibleProductsService get flexible products list (Savings)
@@ -531,6 +556,16 @@ func (c *Client) NewCreateMarginOrderService() *CreateMarginOrderService {
 // NewCancelMarginOrderService init cancel order service
 func (c *Client) NewCancelMarginOrderService() *CancelMarginOrderService {
 	return &CancelMarginOrderService{c: c}
+}
+
+// NewCreateMarginOCOService init creating margin order service
+func (c *Client) NewCreateMarginOCOService() *CreateMarginOCOService {
+	return &CreateMarginOCOService{c: c}
+}
+
+// NewCancelMarginOCOService init cancel order service
+func (c *Client) NewCancelMarginOCOService() *CancelMarginOCOService {
+	return &CancelMarginOCOService{c: c}
 }
 
 // NewGetMarginOrderService init get order service
@@ -668,9 +703,49 @@ func (c *Client) NewUserUniversalTransferService() *CreateUserUniversalTransferS
 	return &CreateUserUniversalTransferService{c: c}
 }
 
+// NewAllCoinsInformation
+func (c *Client) NewGetAllCoinsInfoService() *GetAllCoinsInfoService {
+	return &GetAllCoinsInfoService{c: c}
+}
+
 // NewDustTransferService init Get All Margin Assets service
 func (c *Client) NewGetAllMarginAssetsService() *GetAllMarginAssetsService {
 	return &GetAllMarginAssetsService{c: c}
+}
+
+// NewFiatDepositWithdrawHistoryService init the fiat deposit/withdraw history service
+func (c *Client) NewFiatDepositWithdrawHistoryService() *FiatDepositWithdrawHistoryService {
+	return &FiatDepositWithdrawHistoryService{c: c}
+}
+
+// NewFiatPaymentsHistoryService init the fiat payments history service
+func (c *Client) NewFiatPaymentsHistoryService() *FiatPaymentsHistoryService {
+	return &FiatPaymentsHistoryService{c: c}
+}
+
+// NewFiatPaymentsHistoryService init the spot rebate history service
+func (c *Client) NewSpotRebateHistoryService() *SpotRebateHistoryService {
+	return &SpotRebateHistoryService{c: c}
+}
+
+// NewConvertTradeHistoryService init the convert trade history service
+func (c *Client) NewConvertTradeHistoryService() *ConvertTradeHistoryService {
+	return &ConvertTradeHistoryService{c: c}
+}
+
+// NewGetIsolatedMarginAllPairsService init get isolated margin all pairs service
+func (c *Client) NewGetIsolatedMarginAllPairsService() *GetIsolatedMarginAllPairsService {
+	return &GetIsolatedMarginAllPairsService{c: c}
+}
+
+// NewInterestHistoryService init the interest history service
+func (c *Client) NewInterestHistoryService() *InterestHistoryService {
+	return &InterestHistoryService{c: c}
+}
+
+// NewTradeFeeService init the trade fee service
+func (c *Client) NewTradeFeeService() *TradeFeeService {
+	return &TradeFeeService{c: c}
 }
 
 func (c *Client) NewTransferService() *TransferService {
