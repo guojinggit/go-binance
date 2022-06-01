@@ -7,6 +7,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/bitly/go-simplejson"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -17,7 +18,6 @@ import (
 	"github.com/adshao/go-binance/v2/common"
 	"github.com/adshao/go-binance/v2/delivery"
 	"github.com/adshao/go-binance/v2/futures"
-	"github.com/bitly/go-simplejson"
 )
 
 // SideType define side type of order
@@ -748,6 +748,6 @@ func (c *Client) NewTradeFeeService() *TradeFeeService {
 	return &TradeFeeService{c: c}
 }
 
-func (c *Client) NewTransferService() *TransferService {
-	return &TransferService{c: c}
+func (c *Client) NewSubAccountUniversalTransferService() *SubAccountUniversalTransferService {
+	return &SubAccountUniversalTransferService{c: c}
 }
